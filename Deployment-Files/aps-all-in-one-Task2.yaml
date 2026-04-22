@@ -5,10 +5,22 @@ metadata:
   name: order-service
   namespace: default
   annotations:
-    azure.workload.identity/client-id: "<CLIENT_ID_FROM_STEP_5b>"
+    azure.workload.identity/client-id: "2264dfb6-3242-495c-ba41-4484b92aeeff"
   labels:
     azure.workload.identity/use: "true"
 ---
+
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: makeline-service
+  namespace: default
+  annotations:
+    azure.workload.identity/client-id: "2264dfb6-3242-495c-ba41-4484b92aeeff"
+  labels:
+    azure.workload.identity/use: "true"
+---
+
 # StatefulSet for MongoDB
 apiVersion: apps/v1
 kind: StatefulSet
@@ -114,92 +126,6 @@ spec:
   selector:
     app: mongodb # Target pods with label `app: mongodb`
 ---
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: rabbitmq-enabled-plugins
-data:
-  rabbitmq_enabled_plugins: "[rabbitmq_management]."
----
-
-# StatefulSet for RabbitMQ
-apiVersion: apps/v1
-kind: StatefulSet
-metadata:
-  name: rabbitmq
-spec:
-  serviceName: rabbitmq # Headless service for RabbitMQ
-  replicas: 1 # Single replica
-  selector:
-    matchLabels:
-      app: rabbitmq
-  template:
-    metadata:
-      labels:
-        app: rabbitmq
-    spec:
-      nodeSelector:
-        "kubernetes.io/os": linux
-      containers:
-        - name: rabbitmq
-          image: rabbitmq:3-management # RabbitMQ image with management UI
-          ports:
-            - containerPort: 5672 # AMQP protocol port
-              name: rabbitmq-amqp
-            - containerPort: 15672 # HTTP management UI port
-              name: rabbitmq-http
-          env: # Environment variables for RabbitMQ
-            - name: RABBITMQ_DEFAULT_USER
-              value: "username" # Default username
-            - name: RABBITMQ_DEFAULT_PASS
-              value: "password" # Default password
-          resources: # Resource limits and requests
-            requests:
-              cpu: 10m
-              memory: 128Mi
-            limits:
-              cpu: 250m
-              memory: 256Mi
-          volumeMounts: # Mount configuration for RabbitMQ plugins
-            - name: rabbitmq-enabled-plugins
-              mountPath: /etc/rabbitmq/enabled_plugins
-              subPath: enabled_plugins
-            - name: rabbitmq-data
-              mountPath: /var/lib/rabbitmq              
-      volumes:
-        - name: rabbitmq-enabled-plugins
-          configMap:
-            name: rabbitmq-enabled-plugins
-            items:
-              - key: rabbitmq_enabled_plugins
-                path: enabled_plugins
-  volumeClaimTemplates:
-    - metadata:
-        name: rabbitmq-data
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 5Gi
----
-# Service for RabbitMQ
-apiVersion: v1
-kind: Service
-metadata:
-  name: rabbitmq
-spec:
-  selector:
-    app: rabbitmq
-  ports:
-    - name: rabbitmq-amqp
-      port: 5672
-      targetPort: 5672
-    - name: rabbitmq-http
-      port: 15672
-      targetPort: 15672
-  type: ClusterIP
- # Internal cluster service
----
 # Deployment for Order Service
 apiVersion: apps/v1
 kind: Deployment
@@ -214,7 +140,9 @@ spec:
     metadata:
       labels:
         app: order-service
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: order-service 
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
@@ -288,7 +216,9 @@ spec:
     metadata:
       labels:
         app: makeline-service
+        azure.workload.identity/use: "true"
     spec:
+      serviceAccountName: makeline-service 
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
