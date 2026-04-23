@@ -9,6 +9,23 @@
 
 **Semester**: Winter 2026
 
+## Project overview
+This is a demo of a best buy website. That uses 9 microserives. 
+1. Store-Front: Customer web app.
+2. Store-Admin: Employee web app.
+3. Order-Service: Order processing API.
+4. Product-Service: Product management API.
+5. Makeline-Service: Background worker for order processing.
+6. Database: MongoDB (Stateful).
+7. Blob Connect: handles uploading and downloading to the blob storage
+8. Azure Service Bus : handles order request 
+9. Azure Blob storage : stored Product images
+
+## Deployment instructions
+To deploy run the 
+1. Set up and azure Kubernetes 
+2. kubectl apply -f aps-all-in-one.yaml
+
 ### **Repository links**
 #### Blob connect : 
 https://github.com/JChen-AC/cst8915-blobconnect-service-final-project
