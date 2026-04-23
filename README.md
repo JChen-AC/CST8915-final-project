@@ -38,7 +38,7 @@ https://hub.docker.com/repository/docker/jchen1101/fp-product-service
 https://youtu.be/LoHTf25a_Eo
 
 ## Diagram
-![architecture diagram ](./cst89-fp3.drawio.png) 
+![architecture diagram ](./cst8915-fp3.drawio.png) 
 
 
 ## AI Disclosure 
