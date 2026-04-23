@@ -502,12 +502,11 @@ spec:
   type: ClusterIP
   ports:
     - name: http
-      port: 3005 # Service port
+      port: 3005
       targetPort: 3005
   selector:
     app: blob-connector
 ---
-# Deployment for Store Front
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -521,48 +520,47 @@ spec:
     metadata:
       labels:
         app: blob-connector
-        azure.workload.identity/use: "true" 
+        azure.workload.identity/use: "true"
     spec:
       serviceAccountName: blob-connector-service
       nodeSelector:
         "kubernetes.io/os": linux
       containers:
         - name: blob-connector
-          image: jchen1101/fp-blob-connector:latest # blob-connector store application
+          image: jchen1101/fp-blob-connector:latest
           ports:
-            - containerPort: 3005 # Front-end app port
+            - containerPort: 3005
               name: blob-connector
-          env: # Environment variables for backend URLs
+          env:
             - name: BLOB_ADDRESS
               value: "https://cst8915finalprojectblob.blob.core.windows.net/"
             - name: BLOB_CONTAINER
               value: "products"
-          resources: # Resource requests and limits
+          resources:
             requests:
               cpu: 1m
               memory: 200Mi
             limits:
               cpu: 1000m
               memory: 512Mi
-          startupProbe: # Initial health check
+          startupProbe:
             httpGet:
               path: /health
               port: 3005
             failureThreshold: 3
             initialDelaySeconds: 5
             periodSeconds: 5
-          readinessProbe: # Ready status probe
+          readinessProbe:
             httpGet:
               path: /health
               port: 3005
             failureThreshold: 3
             initialDelaySeconds: 3
             periodSeconds: 3
-          livenessProbe: # Ongoing health check
+          livenessProbe:
             httpGet:
               path: /health
               port: 3005
             failureThreshold: 5
             initialDelaySeconds: 3
             periodSeconds: 3
----
