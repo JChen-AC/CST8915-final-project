@@ -32,7 +32,9 @@ To deploy run the
 | Blob Connect | [GitHub](https://github.com/JChen-AC/cst8915-blobconnect-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-blob-connector) |
 | Order Service | [GitHub](https://github.com/JChen-AC/cst8915-order-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-order-service) |
 | Makeline Service | [GitHub](https://github.com/JChen-AC/cst8915-makeline-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-makeline-service/general) |
-| Store Admin | [GitHub](https://github.com/JChen-AC/cst8915-store-admin-final-project) |
+| Store Admin | [GitHub](https://github.com/JChen-AC/cst8915-store-admin-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-store-admin) |
+| Store Front | [GitHub](https://github.com/JChen-AC/cst8915-store-front-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-store-front/general) |
+| Product Service | [GitHub](https://github.com/JChen-AC/cst8915-product-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-product-service) |
 
 ## Demo Video
 https://youtu.be/LoHTf25a_Eo
