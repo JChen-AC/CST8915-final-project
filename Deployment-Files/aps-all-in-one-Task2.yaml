@@ -21,6 +21,17 @@ metadata:
     azure.workload.identity/use: "true"
 ---
 
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: blob-connector-service
+  namespace: default
+  annotations:
+    azure.workload.identity/client-id: "92482939-2a16-4634-adcc-02f9496ee4d6"
+  labels:
+    azure.workload.identity/use: "true"
+---
+
 # StatefulSet for MongoDB
 apiVersion: apps/v1
 kind: StatefulSet
@@ -481,4 +492,77 @@ spec:
   selector:
     app: store-admin
   type: LoadBalancer # Expose service externally via load balancer
+---
+# Service for Blob Connector Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: blob-connector-service
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 3005 # Service port
+      targetPort: 3005
+  selector:
+    app: blob-connector
+---
+# Deployment for Store Front
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: blob-connector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blob-connector
+  template:
+    metadata:
+      labels:
+        app: blob-connector
+        azure.workload.identity/use: "true" 
+    spec:
+      serviceAccountName: blob-connector-service
+      nodeSelector:
+        "kubernetes.io/os": linux
+      containers:
+        - name: blob-connector
+          image: jchen1101/fp-blob-connector:latest # blob-connector store application
+          ports:
+            - containerPort: 3005 # Front-end app port
+              name: blob-connector
+          env: # Environment variables for backend URLs
+            - name: BLOB_ADDRESS
+              value: "https://cst8915finalprojectblob.blob.core.windows.net/"
+            - name: BLOB_CONTAINER
+              value: "products"
+          resources: # Resource requests and limits
+            requests:
+              cpu: 1m
+              memory: 200Mi
+            limits:
+              cpu: 1000m
+              memory: 512Mi
+          startupProbe: # Initial health check
+            httpGet:
+              path: /health
+              port: 3005
+            failureThreshold: 3
+            initialDelaySeconds: 5
+            periodSeconds: 5
+          readinessProbe: # Ready status probe
+            httpGet:
+              path: /health
+              port: 3005
+            failureThreshold: 3
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          livenessProbe: # Ongoing health check
+            httpGet:
+              path: /health
+              port: 3005
+            failureThreshold: 5
+            initialDelaySeconds: 3
+            periodSeconds: 3
 ---
