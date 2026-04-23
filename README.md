@@ -34,9 +34,11 @@ https://hub.docker.com/repository/docker/jchen1101/fp-store-front/general
 https://github.com/JChen-AC/cst8915-product-service-final-project
 https://hub.docker.com/repository/docker/jchen1101/fp-product-service
 
-
 ## Demo Video
 https://youtu.be/LoHTf25a_Eo
+
+## Diagram
+![architecture diagram ](./cst89-fp3.drawio.png) 
 
 
 ## AI Disclosure 
