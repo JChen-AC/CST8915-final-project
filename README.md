@@ -45,18 +45,16 @@ https://youtu.be/LoHTf25a_Eo
 
 ## AI Disclosure 
 AI was used extensively in this project and repository
-Note : All code generated with AI will have a comment stating that it was generated or AI generated code was the primary base
 
 ### Simulation
 ChatGPT and Claude were used in the following ways :
-- debugging
-- setting up and sending code to azure service bus
-- connecting to blob storage
-- 
-
-Claude was used in the following ways:
-- Help determine what is needed for the documentation
-
+- used to help debug issues with setting up the cluster
+- used to help set up azure service bus and blob storage. As well as how to handle authentication while dealing with kubernetes
+- helped modify the order service messagequeue.js to connect to azure service bus
+- debug a variety of coding issues
+- helped extensively with debugging blob connector and ProductForm.vue
+- helped determine microservice architecture for the blob connector
+  
 ## References 
 - https://learn.microsoft.com/en-us/azure/storage/blobs/storage-quickstart-blobs-nodejs?tabs=managed-identity%2Croles-azure-portal%2Csign-in-azure-cli&pivots=blob-storage-quickstart-scratch
 
