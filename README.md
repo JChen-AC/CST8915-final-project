@@ -27,29 +27,12 @@ To deploy run the
 2. kubectl apply -f aps-all-in-one.yaml
 
 ### **Repository links**
-#### Blob connect : 
-https://github.com/JChen-AC/cst8915-blobconnect-service-final-project
-https://hub.docker.com/repository/docker/jchen1101/fp-blob-connector
-
-#### order service : 
-https://github.com/JChen-AC/cst8915-order-service-final-project
-https://hub.docker.com/repository/docker/jchen1101/fp-order-service
-
-#### makeline service : 
-https://github.com/JChen-AC/cst8915-makeline-service-final-project
-https://hub.docker.com/repository/docker/jchen1101/fp-makeline-service/general
-
-#### Store admin:
-https://github.com/JChen-AC/cst8915-store-admin-final-project
-https://hub.docker.com/repository/docker/jchen1101/fp-store-admin
-
-#### Store front:
-https://github.com/JChen-AC/cst8915-store-front-final-project
-https://hub.docker.com/repository/docker/jchen1101/fp-store-front/general
-
-#### product service: 
-https://github.com/JChen-AC/cst8915-product-service-final-project
-https://hub.docker.com/repository/docker/jchen1101/fp-product-service
+| Service | GitHub | Docker Hub |
+|---|---|---|
+| Blob Connect | [GitHub](https://github.com/JChen-AC/cst8915-blobconnect-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-blob-connector) |
+| Order Service | [GitHub](https://github.com/JChen-AC/cst8915-order-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-order-service) |
+| Makeline Service | [GitHub](https://github.com/JChen-AC/cst8915-makeline-service-final-project) | [Docker Hub](https://hub.docker.com/repository/docker/jchen1101/fp-makeline-service/general) |
+| Store Admin | [GitHub](https://github.com/JChen-AC/cst8915-store-admin-final-project) |
 
 ## Demo Video
 https://youtu.be/LoHTf25a_Eo
